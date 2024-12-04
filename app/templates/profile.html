@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <h1>Welcome, {{ current_user.username }}!</h1>
+        <p class="user-email">{{ current_user.email }}</p>
+    </div>
+
+    <div class="profile-info">
+        <!-- Profile Picture Section -->
+        <div class="profile-picture">
+            <img src="{{ url_for('static', filename='profile_pics/' + (current_user.profile_picture or 'default.jpg')) }}" alt="Profile Picture" class="profile-img">
+        </div>
+
+        <!-- Form to Update Profile Picture -->
+        <div class="update-picture">
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.update_profile_picture') }}">
+                <div class="form-group">
+                    <label for="profile_picture">Choose a new profile picture:</label>
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Picture</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

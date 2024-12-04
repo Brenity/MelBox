@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">{{ movie.title }}</h1>
+
+    <div class="d-flex justify-content-center mb-4">
+        <!-- Movie Image -->
+        <img src="{{ url_for('static', filename='images/' + movie.image_filename) }}" 
+             alt="{{ movie.title }}" 
+             class="img-thumbnail" 
+             style="max-width: 300px; max-height: 450px;">
+    </div>
+
+    <!-- Movie Details -->
+    <div class="movie-details">
+        <p><strong>Year:</strong> {{ movie.year }}</p>
+        <p><strong>Genre:</strong> {{ movie.genre }}</p>
+        <p><strong>Description:</strong> {{ movie.description }}</p>
+    </div>
+
+    <!-- Rating Form -->
+    <div class="rating-section mt-4">
+        <h3>Add Your Rating</h3>
+        <form method="POST" action="{{ url_for('main.add_review', movie_id=movie.id) }}">
+            <label for="rating">Rating:</label>
+            <select name="rating" id="rating" required>
+                <option value="" disabled selected>Select Rating</option>
+                <option value="1">1 star</option>
+                <option value="2">2 stars</option>
+                <option value="3">3 stars</option>
+                <option value="4">4 stars</option>
+                <option value="5">5 stars</option>
+            </select>
+
+            <label for="review">Review:</label>
+            <textarea name="review" id="review" rows="4" placeholder="Write your review here..." required></textarea>
+
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+
+    <!-- Display Reviews -->
+    <div class="reviews-section mt-4">
+        <h3>Reviews:</h3>
+        {% if reviews %}
+            <ul class="list-group">
+                {% for review in reviews %}
+                    <li class="list-group-item">
+                        <p><strong>{{ review.user }}:</strong> {{ review.rating }} stars</p>
+                        <p>{{ review.content }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No reviews yet. Be the first to review this movie!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

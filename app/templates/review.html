@@ -1,0 +1,24 @@
+<h3>{{ movie.title }}</h3>
+<p><strong>Year:</strong> {{ movie.year }}</p>
+<p><strong>Genre:</strong> {{ movie.genre }}</p>
+<img src="{{ url_for('static', filename='images/' + movie.image_filename) }}" alt="{{ movie.title }} image" class="movie-img">
+
+<!-- Display the current rating (if any) -->
+{% if movie.rating %}
+    <p><strong>Current Rating:</strong> {{ movie.rating }} stars</p>
+{% else %}
+    <p><strong>No ratings yet.</strong></p>
+{% endif %}
+
+<!-- Rating Form -->
+<form method="POST" action="{{ url_for('main.rate_movie', movie_id=movie.id) }}">
+    <label for="rating">Rate this movie:</label>
+    <select name="rating" id="rating">
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+</form>

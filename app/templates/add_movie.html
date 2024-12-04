@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+<!-- Inherits layout from the base template -->
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Add a Movie</h1>
+    <!-- Page title -->
+
+    <form method="POST" enctype="multipart/form-data">
+        <!-- Form to add a movie, allows file upload with enctype -->
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+            <!-- Input for movie title, required -->
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
+            <!-- Text area for movie description, required -->
+        </div>
+
+        <div class="form-group">
+            <label for="year">Year</label>
+            <input type="number" class="form-control" id="year" name="year">
+            <!-- Input for release year -->
+        </div>
+
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            <select class="form-control" id="genre" name="genre" required>
+                <!-- Dropdown for selecting genre, required -->
+                <option value="">Select Genre</option>
+                <!-- Genre options -->
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Horror">Horror</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Documentary">Documentary</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+            <!-- File input for uploading a movie image -->
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Movie</button>
+        <!-- Submit button -->
+    </form>
+</div>
+{% endblock %}
+<!-- Ends the 'content' block -->

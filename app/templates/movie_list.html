@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Movies</h1>
+
+    <!-- Button to go to the Add Movie page -->
+    <div class="text-right mb-3">
+        <a href="{{ url_for('main.add_movie') }}" class="btn btn-success">Add Movie</a>
+    </div>
+
+    {% if movies %}
+        <ul class="list-group">
+            {% for movie in movies %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <!-- Display movie image -->
+                        <img src="{{ url_for('static', filename='images/' + movie.image_filename) }}" 
+                             alt="{{ movie.title }}" 
+                             class="img-thumbnail" 
+                             style="max-width: 100px; max-height: 150px; margin-right: 15px;">
+                        <div>
+                            <h5>{{ movie.title }}</h5>
+                            <p class="mb-0 text-muted">{{ movie.year }} | {{ movie.genre }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Container for buttons (View Details and Delete) -->
+                    <div class="d-flex justify-content-end align-items-center">
+                        <!-- View Details button -->
+                        <a href="{{ url_for('main.movie', movie_id=movie.id) }}" class="btn btn-primary btn-sm mr-2">
+                            View Details
+                        </a>
+
+                        <!-- Delete button for each movie -->
+                        <form method="POST" action="{{ url_for('main.delete_movie', movie_id=movie.id) }}" 
+                              onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info text-center">
+            No movies available. Add some movies to the database!
+        </div>
+    {% endif %}
+    
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="container mt-3">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}
